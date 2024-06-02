@@ -27,9 +27,25 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	// Spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// webclient
+	implementation 'org.springframework.boot:spring-boot-starter-webflux:3.0.2'
+
+	// https://mvnrepository.com/artifact/com.google.guava/guava
+	implementation group: 'com.google.guava', name: 'guava', version: '33.0.0-jre'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.session:spring-session-data-redis'
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	// Spring JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	//MySQL
+	runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 tasks.named('test') {
