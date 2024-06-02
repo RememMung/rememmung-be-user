@@ -14,9 +14,13 @@ public class AuthService implements UserService{
     public boolean validateToken(String acceessToken, String APIURI) {
         try {
             Map res = restService.getRequest(APIURI, acceessToken);
-            // 인증 완료
-            return true;
+            if(res.get("statusCode").equals(200)) {
+                return true;
+            }else {
+                return false;
+            }
         }catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

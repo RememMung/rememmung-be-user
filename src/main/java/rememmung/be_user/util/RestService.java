@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -33,12 +34,16 @@ public class RestService {
     }
 
     public Map getRequest(String APIURL, String accessToken) {
-        Object res = webClient.get().uri(APIURL).header("authorization","Bearer " + accessToken)
-                .exchangeToMono(response -> {
+        Object res = webClient.get().uri(APIURL).header("Authorization","Bearer " + accessToken)
+                .exchangeToFlux(response -> {
                     if(response.statusCode().equals(HttpStatus.OK)) {
-                        return response.bodyToMono(Map.class);
+                        return Flux.just(
+                                ImmutableMap.builder()
+                                        .put("statusCode", response.statusCode().value())
+                                        .build()
+                        );
                     }else {
-                        return Mono.just(
+                        return Flux.just(
                                 ImmutableMap.builder()
                                         .put("statusCode", response.statusCode().value())
                                         .build()
