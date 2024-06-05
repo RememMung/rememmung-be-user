@@ -52,7 +52,7 @@ public class RestService {
                 }).block();
 
         Map restoMap = objectMapper.convertValue(res, Map.class);
-        restoMap.put("statusCode", statusCode);
+        restoMap.put("statusCode", statusCode.intValue());
         return restoMap;
     }
 }
