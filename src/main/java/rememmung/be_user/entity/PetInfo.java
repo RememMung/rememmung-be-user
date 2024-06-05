@@ -22,7 +22,7 @@ public class PetInfo {
     private String sex;
     private String birthday;
     private String farewellday;
-    private String like;
+    private String likeInfo;
     private String hate;
     private String skill;
 

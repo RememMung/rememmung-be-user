@@ -1,4 +1,4 @@
-package rememmung.be_user.service;
+package rememmung.be_user.entity;
 
 import lombok.Data;
 
