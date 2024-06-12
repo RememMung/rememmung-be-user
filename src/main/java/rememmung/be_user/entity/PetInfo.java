@@ -14,15 +14,15 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class PetInfo {
     @Id
     private Long id; //user 고유 id
-    private String user_id;
+    private String userId;
     private String type;
     private String name;
-    private String Gender;
+    private String gender;
     private String birth;
     private String farewall;
     private String fondof;
     private String dislike;
     private String skill;
-    private String created_at;
-    private String updated_at;
+    private String createdAt;
+    private String updatedAt;
 }
