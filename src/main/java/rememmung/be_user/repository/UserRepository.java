@@ -9,6 +9,6 @@ import rememmung.be_user.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    public Optional<UserEntity> findByUserId(String userId);
+    public Optional<UserEntity> findByAuthId(String authId);
 
 }

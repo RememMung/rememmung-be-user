@@ -1,11 +1,14 @@
 package rememmung.be_user.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Data
@@ -13,16 +16,48 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Builder
 public class PetInfo {
     @Id
-    private Long id; //user 고유 id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 191)
     private String userId;
-    private String type;
+
+    @Column(nullable = false, length = 191)
     private String name;
-    private String gender;
-    private String birth;
-    private String farewall;
-    private String fondof;
+
+    @Column(length = 191)
     private String dislike;
+
+    @Column(length = 191)
     private String skill;
-    private String createdAt;
-    private String updatedAt;
+
+    @Column(nullable = false, columnDefinition = "TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3)")
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private Gender gender;
+
+    @Column(columnDefinition = "TIMESTAMP(3)")
+    private LocalDateTime birthday;
+
+    @Column(columnDefinition = "TIMESTAMP(3)")
+    private LocalDateTime farewallday;
+
+    @Column(length = 191)
+    private String favorites;
+
+    @Column(nullable = false, length = 191)
+    private String personality;
+
+    @Column(nullable = false, length = 191)
+    private String species;
+
+    // Getters and Setters
+
+    public enum Gender {
+        MALE, FEMALE
+    }
 }
