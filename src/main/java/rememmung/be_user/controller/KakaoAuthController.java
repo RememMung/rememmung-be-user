@@ -34,17 +34,18 @@ public class KakaoAuthController implements AuthCheckerController {
         String accessToken = tokenData.getAccessToken();
 
         Map tokenInfo = authService.getTokenInfo(accessToken, kakaoAuthUri);
+
         try {
             if (tokenInfo.get("statusCode").equals(200)) {
-                Map existed = userValidSuccessHandler.saveUserInfo(tokenInfo);
+                Map existed = userValidSuccessHandler.saveUserInfo(tokenInfo, accessToken);
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(existed.get("id"), null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
                 final HttpSession session = httpRequest.getSession();
-                session.setAttribute("id", existed.get("id"));
+                session.setAttribute("id", existed.get("id").toString());
                 session.setMaxInactiveInterval(3600);
-                // 기존 유저인지 확인
+
                 return ResponseEntity.ok().body(Map.of("existed", existed.get("existed")));
 
             } else {
