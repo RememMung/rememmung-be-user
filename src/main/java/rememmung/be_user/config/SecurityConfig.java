@@ -27,7 +27,14 @@ public class SecurityConfig  {
                         .requestMatchers("/api/**", "/error", "/test").permitAll()
                                 .anyRequest().permitAll()
                 ).sessionManagement(req -> {req.sessionFixation().none(); req.sessionCreationPolicy(
-                        SessionCreationPolicy.IF_REQUIRED);});
+                        SessionCreationPolicy.IF_REQUIRED);})
+                .logout(request ->
+                                request.logoutUrl("/logout")
+                                        .logoutSuccessUrl("/login?logout")
+                                        .invalidateHttpSession(true)
+                                        .deleteCookies("JSESSIONID")
+                                        .permitAll()
+                        );
 
         return http.build();
     }

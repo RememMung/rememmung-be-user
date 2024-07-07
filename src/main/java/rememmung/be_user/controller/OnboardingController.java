@@ -62,6 +62,7 @@ public class OnboardingController {
         try{
             return ResponseEntity.ok().body(petRepository.findByUserId("userId"));
         }catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(400).body("bad request");
         }
     }
