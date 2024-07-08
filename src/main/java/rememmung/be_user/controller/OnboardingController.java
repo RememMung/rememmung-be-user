@@ -2,7 +2,9 @@ package rememmung.be_user.controller;
 
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.swing.text.html.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +62,11 @@ public class OnboardingController {
             return ResponseEntity.status(401).body("Invalid Session");
         }
         try{
-            return ResponseEntity.ok().body(petRepository.findByUserId("userId"));
+            Optional<PetInfo> petInfo = petRepository.findByUserId(userId);
+            if(petInfo.isPresent())
+                return ResponseEntity.ok().body(petInfo.get());
+            else
+                return ResponseEntity.noContent().build();
         }catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(400).body("bad request");

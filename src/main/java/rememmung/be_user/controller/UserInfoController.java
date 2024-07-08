@@ -15,21 +15,21 @@ import rememmung.be_user.repository.UserRepository;
 @RequiredArgsConstructor
 public class UserInfoController {
     private final UserRepository userRepository;
-    @GetMapping("userInfo/get")
+    @GetMapping("/userInfo/get")
     public ResponseEntity<?> getUserInfo(HttpSession session) {
         String userId = (String) session.getAttribute("id");
         if(userId.equals(null) || SecurityContextHolder.getContext().getAuthentication() == null){
             return ResponseEntity.status(401).body("Invalid Session");
         }
         try{
-            Optional<UserEntity> userEntityOptional = userRepository.findByAuthId(userId);
+            Optional<UserEntity> userEntityOptional = userRepository.findById(userId);
             if(userEntityOptional.isPresent()) {
                 return ResponseEntity.status(200).body(userEntityOptional.get());
+            }else {
+                return ResponseEntity.status(404).body("User Info is null");
             }
         }catch (Exception e) {
             return ResponseEntity.status(400).body("bad request");
-        }finally {
-            return ResponseEntity.status(404).body("Server Error");
         }
     }
 }
