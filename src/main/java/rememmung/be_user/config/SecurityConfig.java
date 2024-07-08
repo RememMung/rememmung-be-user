@@ -14,12 +14,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.session.web.http.CookieHttpSessionIdResolver;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.session.web.http.HttpSessionIdResolver;
+import rememmung.be_user.handler.LogoutSuccessHandler;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig  {
+    private final LogoutSuccessHandler logoutSuccessHandler;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -30,7 +33,7 @@ public class SecurityConfig  {
                         SessionCreationPolicy.IF_REQUIRED);})
                 .logout(request ->
                                 request.logoutUrl("/logout")
-                                        .logoutSuccessUrl("/login?logout")
+                                        .logoutSuccessHandler(logoutSuccessHandler)
                                         .invalidateHttpSession(true)
                                         .deleteCookies("JSESSIONID")
                                         .permitAll()
